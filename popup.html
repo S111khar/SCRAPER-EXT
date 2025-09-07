@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Email Scraper</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    <!-- Header -->
+    <div class="header-card">
+      <div class="header-content">
+        <div class="logo-section">
+          <img src="icons/icon32.png" alt="Logo" class="logo">
+          <h1 class="app-title">Email Scraper</h1>
+        </div>
+        <div class="header-actions">
+          <button id="themeToggle" class="icon-btn" title="Toggle theme">
+            <svg class="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </button>
+          <button id="settingsBtn" class="icon-btn" title="Settings">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v6M12 17v6M5.64 7.05l4.95 4.95M13.41 13.41l4.95 4.95M7.05 18.36l4.95-4.95M13.41 10.59l4.95-4.95"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div id="progressBar" class="progress-bar hidden">
+        <div class="progress-fill"></div>
+        <span class="progress-text">0/0 processed</span>
+      </div>
+    </div>
+
+    <!-- Auth Section -->
+    <div id="authSection" class="card">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12l2 2 4-4"/>
+          <path d="M21 12c-1 0-3-1-3-3s2-3 3-3 3 1 3 3-2 3-3 3"/>
+          <path d="M3 12c1 0 3-1 3-3s-2-3-3-3-3 1-3 3 2 3 3 3"/>
+        </svg>
+        <h2>Authentication</h2>
+      </div>
+      <div class="card-content">
+        <div id="loginForm" class="auth-form">
+          <input type="email" id="emailInput" placeholder="Enter your email" class="input-field">
+          <input type="password" id="passwordInput" placeholder="Enter your password" class="input-field">
+          <button id="loginBtn" class="primary-btn">
+            <span class="btn-text">Sign In</span>
+            <div class="btn-spinner hidden"></div>
+          </button>
+          <div class="auth-links">
+            <a href="#" id="signupLink">Create Account</a>
+            <a href="#" id="forgotLink">Forgot Password?</a>
+          </div>
+        </div>
+        <div id="userInfo" class="user-info hidden">
+          <div class="user-details">
+            <span id="userEmail" class="user-email"></span>
+            <span id="userPlan" class="user-plan"></span>
+          </div>
+          <div class="user-actions">
+            <button id="manageSubBtn" class="secondary-btn">Manage Subscription</button>
+            <button id="logoutBtn" class="text-btn">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload Section -->
+    <div id="uploadSection" class="card hidden">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+          <polyline points="10,9 9,9 8,9"/>
+        </svg>
+        <h2>Upload URLs</h2>
+      </div>
+      <div class="card-content">
+        <div class="upload-area" id="uploadArea">
+          <svg class="upload-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7,10 12,15 17,10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          <p class="upload-text">Drop CSV/TXT file here or click to browse</p>
+          <p class="upload-subtext">Supports CSV and TXT files with URLs</p>
+          <input type="file" id="fileInput" accept=".csv,.txt" class="file-input">
+        </div>
+        <div id="fileInfo" class="file-info hidden">
+          <div class="file-details">
+            <span id="fileName" class="file-name"></span>
+            <span id="fileSize" class="file-size"></span>
+          </div>
+          <button id="removeFile" class="remove-btn">Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuration Section -->
+    <div id="configSection" class="card hidden">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"/>
+          <path d="M12 1v6M12 17v6M5.64 7.05l4.95 4.95M13.41 13.41l4.95 4.95M7.05 18.36l4.95-4.95M13.41 10.59l4.95-4.95"/>
+        </svg>
+        <h2>Configuration</h2>
+      </div>
+      <div class="card-content">
+        <div class="config-grid">
+          <div class="config-item">
+            <label for="concurrentInput">Concurrent Requests</label>
+            <input type="number" id="concurrentInput" value="8" min="1" max="20" class="input-field">
+          </div>
+          <div class="config-item">
+            <label for="perDomainInput">Per Domain Limit</label>
+            <input type="number" id="perDomainInput" value="3" min="1" max="10" class="input-field">
+          </div>
+          <div class="config-item">
+            <label for="delayMinInput">Min Delay (s)</label>
+            <input type="number" id="delayMinInput" value="1.5" min="0.5" max="10" step="0.1" class="input-field">
+          </div>
+          <div class="config-item">
+            <label for="delayMaxInput">Max Delay (s)</label>
+            <input type="number" id="delayMaxInput" value="3.0" min="1" max="15" step="0.1" class="input-field">
+          </div>
+          <div class="config-item">
+            <label for="timeoutInput">Timeout (s)</label>
+            <input type="number" id="timeoutInput" value="25" min="10" max="60" class="input-field">
+          </div>
+          <div class="config-item">
+            <label for="retriesInput">Max Retries</label>
+            <input type="number" id="retriesInput" value="2" min="0" max="5" class="input-field">
+          </div>
+        </div>
+        <div class="config-options">
+          <label class="checkbox-label">
+            <input type="checkbox" id="respectRobots" checked>
+            <span class="checkmark"></span>
+            Respect robots.txt
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Control Section -->
+    <div id="controlSection" class="card hidden">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5,3 19,12 5,21"/>
+        </svg>
+        <h2>Controls</h2>
+      </div>
+      <div class="card-content">
+        <div class="control-buttons">
+          <button id="startBtn" class="primary-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="5,3 19,12 5,21"/>
+            </svg>
+            <span>Start Scraping</span>
+          </button>
+          <button id="pauseBtn" class="secondary-btn hidden">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="6" y="4" width="4" height="16"/>
+              <rect x="14" y="4" width="4" height="16"/>
+            </svg>
+            <span>Pause</span>
+          </button>
+          <button id="stopBtn" class="danger-btn hidden">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+            </svg>
+            <span>Stop</span>
+          </button>
+        </div>
+        <div id="statusInfo" class="status-info">
+          <div class="status-item">
+            <span class="status-label">Status:</span>
+            <span id="statusText" class="status-value">Ready</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Progress:</span>
+            <span id="progressText" class="status-value">0/0</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Emails Found:</span>
+            <span id="emailsFoundText" class="status-value">0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Log Section -->
+    <div id="logSection" class="card hidden">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <h2>Live Log</h2>
+        <button id="clearLogBtn" class="text-btn">Clear</button>
+      </div>
+      <div class="card-content">
+        <div id="logContainer" class="log-container">
+          <div class="log-entry info">
+            <span class="log-time">Ready</span>
+            <span class="log-message">Waiting for scraping to start...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="card hidden">
+      <div class="card-header">
+        <svg class="card-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2h-4"/>
+          <polyline points="9,11 12,14 15,11"/>
+          <line x1="12" y1="14" x2="12" y2="3"/>
+        </svg>
+        <h2>Results</h2>
+        <div class="results-actions">
+          <button id="exportCsvBtn" class="secondary-btn">Export CSV</button>
+          <button id="exportJsonBtn" class="secondary-btn">Export JSON</button>
+          <button id="copyResultsBtn" class="text-btn">Copy</button>
+        </div>
+      </div>
+      <div class="card-content">
+        <div id="resultsStats" class="results-stats">
+          <div class="stat-item">
+            <span class="stat-value" id="totalEmails">0</span>
+            <span class="stat-label">Total Emails</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="uniqueDomains">0</span>
+            <span class="stat-label">Unique Domains</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="successRate">0%</span>
+            <span class="stat-label">Success Rate</span>
+          </div>
+        </div>
+        <div id="resultsTable" class="results-table">
+          <div class="table-header">
+            <div class="table-cell">Domain</div>
+            <div class="table-cell">Email</div>
+            <div class="table-cell">Source</div>
+            <div class="table-cell">Status</div>
+          </div>
+          <div id="resultsBody" class="table-body">
+            <div class="empty-state">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="M21 21l-4.35-4.35"/>
+              </svg>
+              <p>No results yet</p>
+              <p class="empty-subtext">Start scraping to see results here</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
