@@ -1,15 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Ultimate Email Scraper",
+  "name": "Ultimate Email Scraper Pro",
   "version": "1.0.0",
-  "description": "Professional email scraper with advanced extraction capabilities",
+  "description": "Professional email scraper with advanced extraction capabilities and secure cloud processing",
   "permissions": [
     "storage",
     "downloads",
     "activeTab"
   ],
   "host_permissions": [
-    "https://api.emailscraper.pro/*"
+    "https://api.emailscraper.pro/*",
+    "https://billing.emailscraper.pro/*"
   ],
   "background": {
     "service_worker": "background.js",
@@ -17,7 +18,7 @@
   },
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Ultimate Email Scraper",
+    "default_title": "Ultimate Email Scraper Pro",
     "default_icon": {
       "16": "icons/icon16.png",
       "32": "icons/icon32.png",
@@ -32,7 +33,7 @@
     "128": "icons/icon128.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"
   },
   "web_accessible_resources": [
     {
